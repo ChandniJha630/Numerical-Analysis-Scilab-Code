@@ -1,0 +1,45 @@
+// Define the coefficient matrix A and the constant vector b
+/*A = [3, 9, -2; 4, 2, 13; 4, -2, 1];
+b = [11; 24; -8];*/
+A = [4, 1, -1; 2, 5, 2; 1, -2, -5];
+b = [5; 7; -8];
+
+// Define the initial guess vector x0 and the maximum number of iterations
+x0 = [0; 0; 0];
+max_iter = 1000;
+
+// Define the tolerance level for convergence
+tolerance = 1e-6;
+
+// Compute the lower triangular matrix L, the upper triangular matrix U, and the diagonal matrix D from A
+L = tril(A, -1);
+U = triu(A, 1);
+D = diag(diag(A));
+
+// Compute the inverse of the lower triangular matrix L+D
+LD_inv = inv(L + D);
+
+// Initialize the solution vector x and the iteration counter
+x = x0;
+iter = 0;
+
+// Iterate until the maximum number of iterations is reached or the solution converges
+while iter < max_iter
+    // Compute the new solution vector using the Gauss-Seidel method
+    x_new = LD_inv * (b - U*x);
+    
+    // Check if the solution has converged
+    if norm(x_new - x) < tolerance
+        break;
+    end
+    
+    // Update the solution vector and the iteration counter
+    x = x_new;
+    iter = iter + 1;
+end
+
+// Display the final solution vector and the number of iterations
+disp("Solution vector:");
+disp(x);
+disp("Number of iterations:");
+disp(iter);

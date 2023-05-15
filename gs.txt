@@ -1,0 +1,44 @@
+clear;clc;
+a=[1 1 -1;2 2 5;3 2 -3]
+a1=a
+b=[2;-3;6]
+b1=b
+
+disp([a,b]);
+[r,c]=size(a)
+for i=1:r-1
+    if a(i,i)==0 then
+       row1 = i;
+        row2 = i+1;
+
+    // Swap the rows
+    temp = a(row1, :);
+    a(row1, :) = a(row2, :);
+    a(row2, :) = temp;
+    //swapping b
+        temp = b(row1, :);
+    b(row1, :) = b(row2, :);
+    b(row2, :) = temp;
+end
+disp([a b]);
+   
+    m=a(i,i)
+    a(i,:)=a(i,:)/m
+    b(i)=b(i)/m
+    for j=i+1:r
+        m2=a(j,i)
+        a(j,:)=a(j,:)-m2*a(i,:)
+        b(j)=b(j)-m2*b(i)
+end
+disp([a b]);
+
+for i=r:-1:1
+    sum=0
+    for j=i+1:r
+        sum=sum+a(i,j)*x(j)
+end
+x(i)=(b(i)-sum)/a(i,i)
+disp(x);
+end
+end
+

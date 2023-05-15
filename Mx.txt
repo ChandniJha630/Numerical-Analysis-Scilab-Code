@@ -1,0 +1,35 @@
+deff('x=f1(y,z)','x=(-8+2*y+-z)/4');
+deff('y=f2(x,z)','y=(11-3*x+2*z)/9');
+deff('z=f3(x,y)','z=(24-2*y-4*x)/13');
+x0=0;y0=0;z0=0;
+
+function gauss_jacobi(f1,f2,f3)
+    for i=1:100
+        x1=f1(y0,z0);
+        y1=f2(x0,z0);
+        z1=f3(x0,y0);
+       // printf("x:%f y:%f z:%f\n",x1,y1,z1);
+        a=abs(x1-x0);
+        b=abs(y1-y0); 
+        c=abs(z1-z0);
+        if(a<=0.0001 & b<=0.0001 & c<=0.0001)
+            printf("Ans from Jacobi x: %f y:%f z:%f\n",x1,y1,z1);
+            break;
+        else
+            x0=x1;
+            y0=y1;
+            z0=z1;
+       end
+    end
+endfunction
+
+function gauss_scidal(f1,f2,f3)
+    for i=1:10
+        x0=f1(y0,z0);
+        y0=f2(x0,z0);
+        z0=f3(x0,y0);
+    end
+      printf("Ans From Scidal x: %f y:%f z:%f\n",x0,y0,z0);
+endfunction
+gauss_jacobi(f1,f2,f3)
+ gauss_scidal(f1,f2,f3)

@@ -1,0 +1,61 @@
+// Assign pi to a variable
+my_pi = %pi;
+
+// Define the function to be integrated
+deff('y = f(x, a, b)', 'y = cos(x).*log(sin(x))./(sin(x).^2+1)');
+
+// Define the trapezoid rule function
+function trapezoid(f, a, b, n)
+    h = (b - a) / n;
+    sum = f(a, a, b) + f(b, a, b);
+    for i = 1:n-1
+        t = a + i * h;
+        sum = sum + 2 * f(t, a, b);
+    end
+    res = (h / 2) * sum;
+    printf("%f is integrated value using trapezoid rule\n", res);
+endfunction
+// Define the simpson's 1/3 rule function
+function simpson13(f, a, b, n)
+    if (modulo(n,2)==0) then
+        h = (b - a) / n;
+        sum = f(a, a, b) + f(b, a, b);
+        for i = 1:n-1
+            t = a + i * h;
+            if  (modulo(i,2)== 1) then
+                sum = sum + 4 * f(t, a, b);
+            else
+                sum = sum + 2 * f(t, a, b);
+            end
+        end
+        res = (h / 3) * sum;
+        printf("%f is integrated value using simpson 1/3 rule\n", res);
+    else
+        printf("Cant be solved using Simpsons one-third rule");
+    end
+endfunction
+
+// Define the simpson's 3/8 rule function
+function simpson38(f, a, b, n)
+    if (modulo(n,3)==0) then
+        h = (b - a) / n;
+        sum = f(a, a, b) + f(b, a, b);
+        for i = 1:n-1
+            t = a + i * h;
+            if  (modulo(i,3)== 0) then
+                sum = sum + 2 * f(t, a, b);
+            else
+                sum = sum + 3 * f(t, a, b);
+            end
+        end
+        res = ((3*h) / 8) * sum;
+        printf("%f is integrated value using simpson 3/8 rule\n", res);
+    else
+        printf("Cant be solved using Simpsons 3/8 rule");
+    end
+endfunction
+
+// Call the trapezoid rule function with f(x) and limits of integration
+trapezoid(f, my_pi/4, my_pi/2, 12);
+simpson13(f, my_pi/4, my_pi/2, 12);
+simpson38(f, my_pi/4, my_pi/2, 12);

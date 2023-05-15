@@ -1,0 +1,47 @@
+clc
+deff('y=f(x)','y=x^4-5*x^3-12*x^2+76*x-79')
+deff('y=f1(x)','y=4*x^3-15*x^2-24*x+76')
+function bsm(f,a,b,n)
+    for i=1:n
+        c=(a+b)/2;
+        
+        fc=f(c);
+        fa=f(a);
+        fb=f(b);
+        printf("a:%f b:%f c:%f f(a):%f f(b):%f f(c):%f\n",a,b,c,fa,fb,fc)
+          if fa*fc<0 then 
+            b=c;
+          else
+            a=c;
+          end
+    end
+endfunction
+
+function newton_raphson(f,f1,a,b,n)
+    x=(a+b)/2
+    for i=1:n
+        x=x-(f(x)/f1(x));
+        printf("x:%f f(x):%f f1(x):%f\n",x,f(x),f1(x));
+    end
+endfunction
+
+function regula_falsi(f,a,b,n)
+     for i=1:n
+        c=(a*f(b)-b*f(a))/(f(b)-f(a));
+        
+        fc=f(c);
+        fa=f(a);
+        fb=f(b);
+        printf("a:%f b:%f c:%f f(a):%f f(b):%f f(c):%f\n",a,b,c,fa,fb,fc)
+          if fa*fc<0 then 
+            b=c;
+          else
+            a=c;
+          end
+    end
+endfunction
+bsm(f,2,2.5,20)
+printf("\n\n\n");
+newton_raphson(f,f1,2,2.5,8)
+printf("\n\n\n");
+regula_falsi(f,2,2.5,10)
